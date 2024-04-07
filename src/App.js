@@ -19,6 +19,7 @@ let prompt=document.getElementById("prompt").value.trim();
 const formData=new FormData();
 formData.append("prompt",prompt);
 const fetchData = async () => {
+if(prompt.trim().length>=3){
   try {
     // Show loader and hide actions
     document.getElementById("output").innerHTML = `<div class="text-center"><div class="spinner-grow text-light" role="status"><span class="sr-only">Loading...</span></div></div>`;
@@ -37,6 +38,7 @@ historyData(prompt,response.data);
   } catch (error) {
     console.error('Error:', error);
   }
+}
 };
 fetchData();
 
@@ -84,32 +86,31 @@ setHistory(history);
   return (
     <div className="App">
       <label htmlFor="prompt" className="App-header">
-        <label htmlFor="prompt" className='mt-5'><h1>TJ GPT</h1></label>
+        <label htmlFor="prompt" className='mt-5' ><h1 style={{fontSize:'50px'}}>TJ GPT</h1></label>
         <div id="actions" style={{display:'none'}}>
       <button className="fa fa-download" id="download" title="Download" onClick={()=>{downloadFile()}}></button>
       <button className="fa fa-copy" id="copy" title="Copy" onClick={()=>{copy()}}></button>
       </div>
       <label htmlFor="prompt" id="output"  className='pre-wrapper' style={{fontSize:'1.2rem',minHeight:'300px'}}>
-       <h2>How can I help you today?</h2> 
+       <h2>How can I help you today ?</h2> 
       </label>
       <form onSubmit={prompt} id="searchprompt" className="search">
         <div id="flex">
-       <input type="text" name="prompt" id="prompt" placeholder="How Can I Help You Today?"  required autoFocus/>
+       <input type="text" name="prompt" id="prompt" placeholder="How Can I Help You Today?" minLength={3} required autoFocus/>
        <button className="fa fa-send-o"></button>
        </div>
       </form>
       </label>
       
       <div id="history" className='pre-wrapper container p-5 mt-5' style={{fontSize:'1.2rem',color:'white',textAlign:'left'}}>
-     {history.length>0 && <h2>History</h2>}
+     {history.length>0 && <h2 className='mt-5'>History</h2>}
       {
 (history.slice(0).reverse()).map((obj,i)=>(
-  <div key={i}>
-  <div  className="h_prompt"><b>Prompt:</b> {obj.prompt.trim()}</div>
-  <div  className="timestamp float-right" >{obj.timestamp.trim().toUpperCase()}</div>
+  <div key={i} className="mt-5">
+  <div  className="h_prompt"><b>Prompt:</b> <br/> {obj.prompt.trim()}</div>
   <br />
-  <div  className="h_result" ><b>Result:</b> {obj.result.trim()}</div>
-  <br />
+  <div  className="h_result" ><b>Result:</b> <br /> {obj.result.trim()}</div>
+  <div  className="float-right" style={{float:'right'}}><br/>{obj.timestamp.trim().toUpperCase()}</div>
   <br />
   <hr/>
   </div>
