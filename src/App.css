@@ -4,6 +4,7 @@
 }
 *{
   color:white;
+  scroll-behavior: smooth;
 }
 body{
   background-color: #212121;
