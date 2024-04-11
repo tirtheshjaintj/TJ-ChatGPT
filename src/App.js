@@ -132,7 +132,6 @@ setHistory(history);
   <button className="fa fa-download p-2 download" style={{fontSize:'1.2rem'}} data-prompt={obj.prompt.trim()} data-result={obj.result.trim()} onClick={histdownloadFile} ></button>
   <button className="fa fa-copy p-2 copy" style={{fontSize:'1.2rem'}} onClick={histcopy}  data-result={obj.result.trim()} ></button>
  </div>
-  <br />
   <div  className="h_result" ><b>Result:</b> <br /> {obj.result.trim()}</div>
   <div  className="float-right" style={{float:'right'}} ><br/>{obj.timestamp.trim().toUpperCase()}</div>
   <br />
