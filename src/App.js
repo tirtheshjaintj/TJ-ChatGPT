@@ -128,9 +128,9 @@ setHistory(history);
  return <div key={i} className="mb-5">
   <div  className="h_prompt"><b>Prompt:</b> <br/> {obj.prompt.trim()}</div>
   <div className="actions2">
-  <button className="fa fa-trash p-2" style={{fontSize:'1.2rem'}} onClick={()=>{deleteHistory(history.length-i-1)}}></button>
-  <button className="fa fa-download p-2 download" style={{fontSize:'1.2rem'}} data-prompt={obj.prompt.trim()} data-result={obj.result.trim()} onClick={histdownloadFile} ></button>
-  <button className="fa fa-copy p-2 copy" style={{fontSize:'1.2rem'}} onClick={histcopy}  data-result={obj.result.trim()} ></button>
+  <button className="fa fa-trash p-2" title="Delete" style={{fontSize:'1.2rem'}} onClick={()=>{deleteHistory(history.length-i-1)}}></button>
+  <button className="fa fa-download p-2 download" title="Download" style={{fontSize:'1.2rem'}} data-prompt={obj.prompt.trim()} data-result={obj.result.trim()} onClick={histdownloadFile} ></button>
+  <button className="fa fa-copy p-2 copy" title="Copy" style={{fontSize:'1.2rem'}} onClick={histcopy}  data-result={obj.result.trim()} ></button>
  </div>
   <div  className="h_result" ><b>Result:</b> <br /> {obj.result.trim()}</div>
   <div  className="float-right" style={{float:'right'}} ><br/>{obj.timestamp.trim().toUpperCase()}</div>
