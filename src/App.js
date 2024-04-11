@@ -73,20 +73,22 @@ const downloadFile = () => {
   URL.revokeObjectURL(link.href);
 };
 
-// function histcopy(output){
-//   if(navigator.clipboard) {
-//     navigator.clipboard.writeText(output);
-//   }
-// };
+function histcopy(e){
+  let output=e.target.dataset.result;
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(output);
+  }
+};
 
-// const histdownloadFile = (content) => {
-//   const link = document.createElement("a");
-//   const file = new Blob([content], { type: 'text/plain' });
-//   link.href = URL.createObjectURL(file);
-//   link.download = "output.txt";
-//   link.click();
-//   URL.revokeObjectURL(link.href);
-// };
+const histdownloadFile = (e) => {
+  let content=e.target.dataset;
+  const link = document.createElement("a");
+  const file = new Blob([content.result], { type: 'text/plain' });
+  link.href = URL.createObjectURL(file);
+  link.download = content.prompt+".txt";
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
 
 function copy(){
   let output=document.getElementById("output").innerHTML;
@@ -105,10 +107,10 @@ setHistory(history);
   return (
     <div className="App">
       <label htmlFor="prompt" className="App-header">
-        <label htmlFor="prompt" className='mt-5' ><h1 style={{fontSize:'3rem'}}>TJ GPT</h1></label>
+        <label htmlFor="prompt" className='mt-5 ' ><h1 style={{fontSize:'3rem'}}>TJ GPT</h1></label>
         <div id="actions" style={{display:'none'}}>
-      <button className="fa fa-download" id="download" title="Download" onClick={()=>{downloadFile()}}></button>
-      <button className="fa fa-copy" id="copy" title="Copy" onClick={()=>{copy()}}></button>
+      <button className="fa fa-download download" id="download" title="Download" onClick={()=>{downloadFile()}}></button>
+      <button className="fa fa-copy copy"buttonid="copy" title="Copy" onClick={()=>{copy()}}></button>
       </div>
       <label htmlFor="prompt" id="output"  className='pre-wrapper' style={{fontSize:'1.2rem',minHeight:'300px'}}>
        <h2>How can I help you today?</h2> 
@@ -120,22 +122,24 @@ setHistory(history);
        </div>
       </form>
       </label>
-      
       <div id="history" className='pre-wrapper container p-5 mt-5 mb-5' style={{fontSize:'1.2rem',color:'white',textAlign:'left'}}>
-     {history.length>0 && <a href="#history"> <h2 className='mt-5'>History <i className="fa fa-clock-o" aria-hidden="true" onClick={deleteHistoryAll}></i></h2></a>}
+     {history.length>0 && <a href="#history" className='mt-5'> <h2 className='mt-5'>History <i className="fa fa-clock-o mt-5" aria-hidden="true" onClick={deleteHistoryAll}></i></h2></a>}
       {
-history.length>0 && [...history].reverse().map((obj,i)=>(
-  <div key={i} className="mb-5">
+history.length>0 && history.slice().reverse().map((obj,i)=>{
+ return <div key={i} className="mb-5">
   <div  className="h_prompt"><b>Prompt:</b> <br/> {obj.prompt.trim()}</div>
   <br />
   <div  className="h_result" ><b>Result:</b> <br /> {obj.result.trim()}</div>
   <br />
-  <i className="fa fa-trash" style={{fontSize:'1.5rem'}} onClick={()=>{deleteHistory(i)}}></i>
+  <i className="fa fa-trash p-2" style={{fontSize:'1.5rem'}} onClick={()=>{deleteHistory(history.length-i-1)}}></i>
+  <button className="fa fa-download p-2 download" style={{fontSize:'1.5rem'}} data-prompt={obj.prompt.trim()} data-result={obj.result.trim()} onClick={histdownloadFile} ></button>
+  <button className="fa fa-copy p-2 copy" style={{fontSize:'1.5rem'}} onClick={histcopy}  data-result={obj.result.trim()} ></button>
   <div  className="float-right" style={{float:'right'}} ><br/>{obj.timestamp.trim().toUpperCase()}</div>
+
   <br />
   <hr/>
   </div>
-))
+})
       }
       </div>
     </div>

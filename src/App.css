@@ -13,6 +13,34 @@ a{
   text-decoration: none;
   color:white;
 }
+.typing-effect {
+  border-right: 2px solid black; /* The blinking cursor effect */
+  width: fit-content;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden; /* Hide text overflow */
+  animation: typing 4s steps(20), blink-caret 0.75s step-end infinite;
+}
+
+/* Typing effect animation */
+@keyframes typing {
+  from {
+      width: 0; /* Start with no text visible */
+  }
+  to {
+      width: 100%; /* End with full text visible */
+  }
+}
+
+/* Blinking cursor animation */
+@keyframes blink-caret {
+  from, to {
+      border-color: transparent; /* Hide the cursor */
+  }
+  50% {
+      border-color: black; /* Show the cursor */
+  }
+}
 #actions{
   display:flex;
   width: 80%;
@@ -99,19 +127,19 @@ h1{
   text-align: left;
 }
 
-button,#copy,#download{
+button,.copy,.download{
 background-color:#212121;
 color:white;
 border:none;
 font-size: x-large;
 padding-right: 20px;
 }
-#copy:focus::after{
+.copy:focus::after{
   content:' Copied';
   font-size: medium;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
-#download:focus::after{
+.download:focus::after{
   content:' Downloaded';
   font-size: medium;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
