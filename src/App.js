@@ -112,7 +112,7 @@ setHistory(history);
       <button className="fa fa-download download" id="download" title="Download" onClick={()=>{downloadFile()}}></button>
       <button className="fa fa-copy copy"buttonid="copy" title="Copy" onClick={()=>{copy()}}></button>
       </div>
-      <label htmlFor="prompt" id="output"  className='pre-wrapper' style={{fontSize:'1.2rem',minHeight:'300px'}}>
+      <label htmlFor="prompt" id="output"  className='pre-wrapper p-lg-5 p-3' style={{fontSize:'1.2rem',minHeight:'300px'}}>
        <h2>How can I help you today?</h2> 
       </label>
       <form onSubmit={prompt} id="searchprompt" className="search">
@@ -122,7 +122,7 @@ setHistory(history);
        </div>
       </form>
       </label>
-      <div id="history" className='pre-wrapper container p-5 mt-5 mb-5' style={{fontSize:'1.2rem',color:'white',textAlign:'left'}}>
+      <div id="history" className='pre-wrapper container p-lg-5 p-3 mt-5 mb-5' style={{fontSize:'1.2rem',color:'white',textAlign:'left'}}>
      {history.length>0 && <a href="#history" className='mt-5'> <h2 className='mt-5'>History <i className="fa fa-clock-o mt-5" aria-hidden="true" onClick={deleteHistoryAll}></i></h2></a>}
 {history.length>0 && history.slice().reverse().map((obj,i)=>{
  return <div key={i} className="mb-5">

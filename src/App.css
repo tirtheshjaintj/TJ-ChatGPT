@@ -121,7 +121,6 @@ h1{
 }
 
 #output{
-  padding: 20px;
   height:max-content;
   max-height:90%;
   box-shadow: none;
@@ -160,7 +159,6 @@ padding-right: 20px;
   #searchprompt{
     padding:0;
   }
-
 }
 
 @media (prefers-reduced-motion: no-preference) {
