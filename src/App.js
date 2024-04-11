@@ -15,7 +15,7 @@ function historyData(prompt,result){
 }
 
 function deleteHistory(index) {
-  if(window.confirm("Are you sure you want to delete?")==true){
+  if(window.confirm("Are you sure you want to delete?")===true){
   let history = JSON.parse(localStorage.getItem("history"));
   history.splice(index, 1); // Removes one item at the specified index
   localStorage.setItem("history", JSON.stringify(history));
@@ -24,7 +24,7 @@ function deleteHistory(index) {
 }
 
 function deleteHistoryAll() {
-if(window.confirm("Are you sure you want to delete All History?")==true){
+if(window.confirm("Are you sure you want to delete All History?")===true){
   localStorage.setItem("history", JSON.stringify([]));
   setHistory([]); // Assuming setHistory is a function to update UI
   }
@@ -51,7 +51,7 @@ if(prompt.trim().length>=3){
     // Update output with response data and show actions
     document.getElementById("output").innerHTML = response.data;
 historyData(prompt,response.data);
-    if(response.data.trim()==''){
+    if(response.data.trim()===''){
       document.getElementById("output").innerHTML ="Sorry Not Able to Understand";
     }
     document.getElementById("actions").style.display = "flex";
@@ -124,7 +124,7 @@ setHistory(history);
       <div id="history" className='pre-wrapper container p-5 mt-5 mb-5' style={{fontSize:'1.2rem',color:'white',textAlign:'left'}}>
      {history.length>0 && <a href="#history"> <h2 className='mt-5'>History <i className="fa fa-clock-o" aria-hidden="true" onClick={deleteHistoryAll}></i></h2></a>}
       {
-history.length>0 && history.map((obj,i)=>(
+history.length>0 && [...history].reverse().map((obj,i)=>(
   <div key={i} className="mb-5">
   <div  className="h_prompt"><b>Prompt:</b> <br/> {obj.prompt.trim()}</div>
   <br />
