@@ -41,10 +41,13 @@ a{
       border-color: black; /* Show the cursor */
   }
 }
-#actions{
+#actions,.actions2{
   display:flex;
   width: 80%;
   justify-content: end;
+}
+.actions2{
+  width: 100%;
 }
 
 .App-logo {
