@@ -12,7 +12,7 @@ function historyData(prompt,result){
   const timestamp=date.toLocaleTimeString()+' '+date.toLocaleDateString();
   history.push({prompt,result,timestamp});
   localStorage.setItem("history",JSON.stringify(history));
-  setHistory(history);
+  setHistory(history.reverse());
 }
 
 async  function prompt(e){
@@ -67,7 +67,7 @@ if(!localStorage.getItem("history")){
   localStorage.setItem("history","[]");
 }
 const history=JSON.parse(localStorage.getItem("history"));
-setHistory(history);
+setHistory(history.reverse());
 },[]);
 
   return (
