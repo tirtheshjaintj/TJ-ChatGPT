@@ -15,8 +15,6 @@ function historyData(prompt,result){
   setHistory(history);
 }
 
-
-
 async  function prompt(e){
 e.preventDefault();
 let prompt=document.getElementById("prompt").value.trim();
@@ -33,7 +31,7 @@ if(prompt.trim().length>=3){
       }
     );
     // Update output with response data and show actions
-    document.getElementById("output").innerHTML = response.data;
+    document.getElementById("output").innerText = response.data.toString();
 historyData(prompt,response.data);
     if(response.data.trim()===''){
       document.getElementById("output").innerHTML ="Sorry Not Able to Understand";
