@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import History from './components/History';
 function App() {
   const [history,setHistory]=useState([]);
 function historyData(prompt,result){
@@ -14,30 +15,11 @@ function historyData(prompt,result){
   setHistory(history);
 }
 
-function deleteHistory(index) {
-  if(window.confirm("Are you sure you want to delete?")===true){
-  let history = JSON.parse(localStorage.getItem("history"));
-  history.splice(index, 1); // Removes one item at the specified index
-  localStorage.setItem("history", JSON.stringify(history));
-  setHistory(history); // Assuming setHistory is a function to update UI
-  }
-}
-
-function deleteHistoryAll() {
-if(window.confirm("Are you sure you want to delete All History?")===true){
-  localStorage.setItem("history", JSON.stringify([]));
-  setHistory([]); // Assuming setHistory is a function to update UI
-  }
-}
-
-
 
 
 async  function prompt(e){
 e.preventDefault();
 let prompt=document.getElementById("prompt").value.trim();
-const formData=new FormData();
-formData.append("prompt",prompt);
 const fetchData = async () => {
 if(prompt.trim().length>=3){
   try {
@@ -45,8 +27,10 @@ if(prompt.trim().length>=3){
     document.getElementById("output").innerHTML = `<div class="text-center"><div class="spinner-grow text-light" role="status"><span class="sr-only">Loading...</span></div></div>`;
     document.getElementById("actions").style.display = "none";
     const response = await axios.post(
-      'https://tirtheshjain.000webhostapp.com/AI-assist-helper.php',
-      formData
+      'http://localhost:9000',
+      {
+        prompt
+      }
     );
     // Update output with response data and show actions
     document.getElementById("output").innerHTML = response.data;
@@ -63,6 +47,7 @@ historyData(prompt,response.data);
 fetchData();
 
 }
+
 const downloadFile = () => {
   const link = document.createElement("a");
   const content = document.getElementById("output").innerHTML;
@@ -73,22 +58,7 @@ const downloadFile = () => {
   URL.revokeObjectURL(link.href);
 };
 
-function histcopy(e){
-  let output=e.target.dataset.result;
-  if(navigator.clipboard) {
-    navigator.clipboard.writeText(output);
-  }
-};
 
-const histdownloadFile = (e) => {
-  let content=e.target.dataset;
-  const link = document.createElement("a");
-  const file = new Blob([content.result], { type: 'text/plain' });
-  link.href = URL.createObjectURL(file);
-  link.download = content.prompt+".txt";
-  link.click();
-  URL.revokeObjectURL(link.href);
-};
 
 function copy(){
   let output=document.getElementById("output").innerHTML;
@@ -96,6 +66,7 @@ function copy(){
     navigator.clipboard.writeText(output);
   }
 };
+
 useEffect(()=>{
 if(!localStorage.getItem("history")){
   localStorage.setItem("history","[]");
@@ -106,7 +77,7 @@ setHistory(history);
 
   return (
     <div className="App">
-      <label htmlFor="prompt" className="App-header">
+      <div className="App-header">
         <label htmlFor="prompt" className='mt-5 ' ><h1 style={{fontSize:'3rem'}}>TJ GPT</h1></label>
         <div id="actions" style={{display:'none'}}>
       <button className="fa fa-download download" id="download" title="Download" onClick={()=>{downloadFile()}}></button>
@@ -121,25 +92,8 @@ setHistory(history);
        <button className="fa fa-send-o"></button>
        </div>
       </form>
-      </label>
-      <div id="history" className='pre-wrapper container p-lg-5 p-3 mt-5 mb-5' style={{fontSize:'1.2rem',color:'white',textAlign:'left'}}>
-     {history.length>0 && <a href="#history" className='mt-5'> <h2 className='mt-5'>History <i className="fa fa-clock-o mt-5" aria-hidden="true" onClick={deleteHistoryAll}></i></h2></a>}
-{history.length>0 && history.slice().reverse().map((obj,i)=>{
- return <div key={i} className="mb-5">
-  <div  className="h_prompt"><b>Prompt:</b> <br/> {obj.prompt.trim()}</div>
-  <div className="actions2">
-  <button className="fa fa-trash p-2" title="Delete" style={{fontSize:'1.2rem'}} onClick={()=>{deleteHistory(history.length-i-1)}}></button>
-  <button className="fa fa-download p-2 download" title="Download" style={{fontSize:'1.2rem'}} data-prompt={obj.prompt.trim()} data-result={obj.result.trim()} onClick={histdownloadFile} ></button>
-  <button className="fa fa-copy p-2 copy" title="Copy" style={{fontSize:'1.2rem'}} onClick={histcopy}  data-result={obj.result.trim()} ></button>
- </div>
-  <div  className="h_result" ><b>Result:</b> <br /> {obj.result.trim()}</div>
-  <div  className="float-right" style={{float:'right'}} ><br/>{obj.timestamp.trim().toUpperCase()}</div>
-  <br />
-  <hr/>
-  </div>
-})
-      }
       </div>
+  <History history={history} setHistory={setHistory}/>
     </div>
   );
 }
