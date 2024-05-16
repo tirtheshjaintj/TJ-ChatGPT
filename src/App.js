@@ -27,7 +27,7 @@ if(prompt.trim().length>=3){
     document.getElementById("output").innerHTML = `<div class="text-center"><div class="spinner-grow text-light" role="status"><span class="sr-only">Loading...</span></div></div>`;
     document.getElementById("actions").style.display = "none";
     const response = await axios.post(
-      'http://localhost:9000',
+      'https://open-ai-backend-opal.vercel.app/',
       {
         prompt
       }
