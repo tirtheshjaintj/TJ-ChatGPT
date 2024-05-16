@@ -43,7 +43,6 @@ historyData(prompt,response.data);
 }
 };
 fetchData();
-
 }
 
 const downloadFile = () => {
@@ -55,8 +54,6 @@ const downloadFile = () => {
   link.click();
   URL.revokeObjectURL(link.href);
 };
-
-
 
 function copy(){
   let output=document.getElementById("output").innerHTML;
