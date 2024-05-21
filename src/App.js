@@ -6,6 +6,7 @@ import { useState } from 'react';
 import History from './components/History';
 function App() {
   const [history,setHistory]=useState([]);
+  const [aiModel,setAiModel]=useState("gpt");
 function historyData(prompt,result){
   const history=JSON.parse(localStorage.getItem("history"));
   const date=new Date();
@@ -14,7 +15,6 @@ function historyData(prompt,result){
   localStorage.setItem("history",JSON.stringify(history));
   setHistory(history.reverse());
 }
-
 async  function prompt(e){
 e.preventDefault();
 let prompt=document.getElementById("prompt").value.trim();
@@ -25,13 +25,13 @@ if(prompt.trim().length>=3){
     document.getElementById("output").innerHTML = `<div class="text-center"><div class="spinner-grow text-light" role="status"><span class="sr-only">Loading...</span></div></div>`;
     document.getElementById("actions").style.display = "none";
     const response = await axios.post(
-      'https://open-ai-backend-opal.vercel.app/',
+      `https://open-ai-backend-opal.vercel.app/${aiModel}`,
       {
         prompt
       }
     );
-    // Update output with response data and show actions
-    document.getElementById("output").innerText = response.data.toString();
+// Update output with response data and show actions
+document.getElementById("output").innerText = response.data.toString();
 historyData(prompt,response.data);
     if(response.data.trim()===''){
       document.getElementById("output").innerHTML ="Sorry Not Able to Understand";
@@ -44,7 +44,6 @@ historyData(prompt,response.data);
 };
 fetchData();
 }
-
 const downloadFile = () => {
   const link = document.createElement("a");
   const content = document.getElementById("output").innerHTML;
@@ -54,14 +53,12 @@ const downloadFile = () => {
   link.click();
   URL.revokeObjectURL(link.href);
 };
-
 function copy(){
   let output=document.getElementById("output").innerHTML;
   if(navigator.clipboard) {
     navigator.clipboard.writeText(output);
   }
 };
-
 useEffect(()=>{
 if(!localStorage.getItem("history")){
   localStorage.setItem("history","[]");
@@ -70,10 +67,20 @@ const history=JSON.parse(localStorage.getItem("history"));
 setHistory(history.reverse());
 },[]);
 
+useEffect(()=>{
+document.title=`Tirthesh Jain ${aiModel.toUpperCase()}`;
+},[aiModel]);
+
   return (
     <div className="App">
       <div className="App-header">
-        <label htmlFor="prompt" className='mt-5 ' ><h1 style={{fontSize:'3rem'}}>TJ GPT</h1></label>
+        <label htmlFor="prompt" className='mt-5 d-flex' >
+          <h1>
+          <select name="aimodel" id="aimodel" onChange={(e)=>setAiModel(e.target.value)}>
+            <option value="gpt">TJ GPT</option>
+            <option value="gemini">TJ GEMINI</option>
+          </select></h1>
+          </label>
         <div id="actions" style={{display:'none'}}>
       <button className="fa fa-download download" id="download" title="Download" onClick={()=>{downloadFile()}}></button>
       <button className="fa fa-copy copy"buttonid="copy" title="Copy" onClick={()=>{copy()}}></button>

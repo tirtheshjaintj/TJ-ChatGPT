@@ -3,12 +3,11 @@
   text-align: center;
 }
 *{
-  color:white;
   scroll-behavior: smooth;
 }
 body{
   background-color: #212121;
-
+  user-select: none;
 }
 a{
   text-decoration: none;
@@ -98,7 +97,23 @@ justify-content: center;
 #searchprompt #prompt {
   margin-bottom: 10px;
 }
-
+h1{
+  font-size: 3rem;
+  font-weight: bolder;
+}
+option,select{
+  background-color:#212121;
+  color:white;
+  height:100%;
+  border:none;
+  text-align: center;
+  font-weight: bolder;
+  outline:none;
+}
+option{
+  font-size: 1.5rem;
+  font-weight: normal;
+}
 #searchprompt #prompt ,#output{
   background-color:#212121;
   border:1px rgba(255, 255, 255, 0.252) solid;
