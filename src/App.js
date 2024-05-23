@@ -63,8 +63,8 @@ useEffect(()=>{
 if(!localStorage.getItem("history")){
   localStorage.setItem("history","[]");
 }
-const history=JSON.parse(localStorage.getItem("history"));
-setHistory(history.reverse());
+const history2=JSON.parse(localStorage.getItem("history"));
+setHistory(history2.reverse());
 },[]);
 
 useEffect(()=>{
@@ -76,7 +76,7 @@ document.title=`Tirthesh Jain ${aiModel.toUpperCase()}`;
       <div className="App-header">
         <label htmlFor="prompt" className='mt-5 d-flex' >
           <h1>
-          <select name="aimodel" id="aimodel" onChange={(e)=>setAiModel(e.target.value)}>
+          <select name="aimodel" title="Use both ChatGPT and Gemini" id="aimodel" onChange={(e)=>setAiModel(e.target.value)}>
             <option value="gpt">TJ GPT</option>
             <option value="gemini">TJ GEMINI</option>
           </select></h1>
