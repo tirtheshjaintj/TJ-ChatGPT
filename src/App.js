@@ -5,7 +5,7 @@ import { useState } from 'react';
 import History from './components/History';
 function App() {
   const [history, setHistory] = useState([]);
-  const [aiModel, setAiModel] = useState("gemini");
+  const [aiModel, setAiModel] = useState("groq");
   
   function historyData(prompt, result) {
     const history = JSON.parse(localStorage.getItem("history"));
@@ -80,7 +80,8 @@ function App() {
         <label htmlFor="prompt" className='mt-5 d-flex' >
           <h1>
             <select name="aimodel" title="Use both ChatGPT and Gemini" id="aimodel" onChange={(e) => setAiModel(e.target.value)}>
-            <option value="gemini">TJ GEMINI</option>
+              <option value="groq">TJ GROQ</option>
+              <option value="gemini">TJ GEMINI</option>
               <option value="gpt">TJ GPT</option>
             </select></h1>
         </label>
