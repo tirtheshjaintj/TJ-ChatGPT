@@ -116,6 +116,7 @@ function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.01 }} // Slight delay per character
+                  
                 >
                   {char}
                 </motion.span>
