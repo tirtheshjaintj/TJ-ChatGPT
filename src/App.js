@@ -35,7 +35,7 @@ function App() {
           `https://open-ai-backend-opal.vercel.app/${aiModel}`,
           { prompt }
         );
-        setOutput(response.data.toString());
+        setOutput(response.data.toString().replaceAll("*",""));
         historyData(prompt, response.data);
         if (response.data.trim() === '') {
           setOutput("Sorry Not Able to Understand");
@@ -110,7 +110,7 @@ function App() {
               transition={{ duration: 0.5 }}
               className="text-output"
             >
-              {output.replace("*","").split('').map((char, index) => (
+              {output.replaceAll("*","").split('').map((char, index) => (
                 <motion.span
                   key={index}
                   initial={{ opacity: 0 }}
